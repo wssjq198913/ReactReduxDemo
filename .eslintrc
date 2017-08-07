@@ -206,7 +206,7 @@
             "error",
             {
                 "argsIgnorePattern": "next",   // if there's mutiple,  next|aaa|bb|ccc
-                 "varsIgnorePattern": "React",
+                "varsIgnorePattern": "React"
             }
         ],
         "no-use-before-define": "off",
