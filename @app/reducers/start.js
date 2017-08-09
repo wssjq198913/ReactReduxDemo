@@ -21,7 +21,7 @@ export default function startReducer(state = initialState, action = {}) {
         case startAction.PROCEEDERROR:
             return {
                 ...state,
-                payLoad: action.payLoad
+                isFetching: false
             };
         case startAction.INCREASE:
             return {

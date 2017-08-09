@@ -25,7 +25,6 @@ export function proceedSucceed(payLoad) {
 
 export function proceedError() {
     return {
-        type: PROCEEDERROR,
-        payLoad: 'Policy number and PIN is not matching.'
+        type: PROCEEDERROR
     }
 }

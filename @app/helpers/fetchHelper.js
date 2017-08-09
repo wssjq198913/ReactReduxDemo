@@ -14,6 +14,12 @@ export default async function fetchRequest (url, method, data) {
     
     let options = {...fetchOptions, body:data};
 
-    var result = await fetch(url, options);
-    return result.json();
+    let response = await fetch(url, options);
+    if (response.status >= 200 && response.status < 300) {
+        let json = await response.json();
+        return json;
+    }
+    else{
+        throw response.statusText;
+    }
 }
