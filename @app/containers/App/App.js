@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { Route, Switch, withRouter} from 'react-router-dom';
+import { Route, Switch} from 'react-router-dom';
 import Start from '../Start/Start';
 import Questionnaire from '../Questionnaire/Questionnaire';
+import Mask from '../../components/Mask/Mask';
 import 'redux';
-import { connect } from 'react-redux';
 // import store from '../../store/createStore';
 // import * as startAction from '../../actions/start';
 
-class App extends Component {
+export default class App extends Component {
     constructor(...props) {
         super(...props);
     }
@@ -15,7 +15,7 @@ class App extends Component {
     render() {
         return (
             <div>
-                {this.props.showLoading ? (<div>LOADING.....</div>) : null}
+                <Mask />
                 <div>This is Header</div>
                 <Switch>
                     <Route exact path="/" component={Start}  />
@@ -26,12 +26,4 @@ class App extends Component {
         );
     }
 }
-
-const mapStateToProps = (state) => {
-    return {
-        showLoading: state.startReducer.isFetching
-    }
-};
-
-export default withRouter(connect(mapStateToProps, null)(App))
 

@@ -53,9 +53,10 @@ module.exports = {
         path: path.resolve('./dist'),
         filename: 'assets/js/[name].js',
         chunkFilename: 'assets/js/[id].js',
+        publicPath: '/'
 
         // deploy static files into server(IIS, CDN), then we need to set publicPath.
-        // in this demo, they'er deployed to IIS.
+        // in below sample, they'er deployed to IIS.
         // publicPath: 'http://localhost/'
     },
 
@@ -79,12 +80,14 @@ module.exports = {
                     loader: 'css-loader',
                     options: {
                         sourceMap: true,
+                        modules: true
                     }
                 },
                 {
                     loader: 'sass-loader',
                     options: {
                         sourceMap: true,
+                        modules:true
                     }
                 }
                 ]

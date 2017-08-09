@@ -27,7 +27,7 @@ class Questionnaire extends Component {
                             This is Questionnaire
                             <Switch>
                                 <Route exact path="/questionnaire" render={() => <Redirect to="/questionnaire/contactInfo" />} />
-                                <Route path='/questionnaire/contactInfo' component={ContactInfo}></Route>
+                                 <Route path='/questionnaire/contactInfo' render={()=><ContactInfo contactInfo={this.props.contactInfo}/>} ></Route> 
                                 <Route path='/questionnaire/odometer' component={Odometer}></Route>
                             </Switch>
                         </div>
@@ -38,10 +38,12 @@ class Questionnaire extends Component {
     }
 }
 
-// const mapStateToProps = (state) => {
-//     return {
-//     }
-// };
+
+const mapStateToProps = (state) => {
+    return {
+        contactInfo: state.questionnaireState.contactInfo == null ? null : state.questionnaireState.contactInfo.contactInfo
+    }
+};
 
 const mapDispatchToProps = (dispatch) => {
     return {
@@ -51,5 +53,5 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default connect(null, mapDispatchToProps)(Questionnaire)
+export default connect(mapStateToProps, mapDispatchToProps)(Questionnaire)
 

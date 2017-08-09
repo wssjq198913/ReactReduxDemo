@@ -6,7 +6,7 @@ import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import bodyParser from 'body-parser';
 import ejs from 'ejs';
-import index from './routes/index';
+import api from './apiRoutes/index';
 import csrf from 'csurf';
 
 if (process.env.NODE_ENV != 'PROD') {
@@ -51,7 +51,14 @@ if (process.env.NODE_ENV != 'production') {
 let csrfProtection = csrf({ cookie: {
     httpOnly: true
 } });
-app.use('/', csrfProtection, index);
+
+
+app.use('/api', csrfProtection, api);
+
+app.use('/', csrfProtection, function(req, res){
+    res.render('index', { title: 'Express', csrfToken: req.csrfToken() });
+});
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

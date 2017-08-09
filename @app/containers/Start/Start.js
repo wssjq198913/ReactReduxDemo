@@ -50,10 +50,10 @@ Start.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
-        payLoad: state.startReducer.payLoad,
-        isShowPolicyNumber: state.startReducer.isShowPolicyNumber,
-        policyNumber: state.startReducer.policyNumber,
-        number: state.startReducer.number
+        payLoad: state.startState.payLoad,
+        isShowPolicyNumber: state.startState.isShowPolicyNumber,
+        policyNumber: state.startState.policyNumber,
+        number: state.startState.number
     }
 };
 

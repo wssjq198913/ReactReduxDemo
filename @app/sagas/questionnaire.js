@@ -5,7 +5,7 @@ import * as questionnaireAction from '../actions/questionnaire';
 
 export function* loadAsync() {
     try {
-        let result = yield call(fetchRequest, '/loadQuestionnaire', 'POST');
+        let result = yield call(fetchRequest, '/api/loadQuestionnaire', 'POST');
         yield put(questionnaireAction.loadSucceed(result))
     }
     catch (error) {

@@ -3,17 +3,15 @@ import 'redux';
 import { connect } from 'react-redux';
 
 class ContactInfo extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
     }
 
     render() {
         return (
             <div>
-                {this.props.isShowPolicyNumber ?  (<div>test showing/hiding</div>) : null}
-                <h3>
-                        This is ContactInfo
-                </h3>
+                {this.props.contactInfo ?  this.props.contactInfo.Email : ''}
+                {/* {this.props.contactInfo} */}
             </div>
         );
     }

@@ -5,7 +5,7 @@ import * as startAction from '../actions/start';
 
 export function* proceedAsync(history) {
     try {
-        let result = yield call(fetchRequest, '/login', 'POST');
+        let result = yield call(fetchRequest, '/api/login', 'POST');
         yield put(startAction.proceedSucceed(result))
         
         // react-router-redux is not compatible with react-router V4

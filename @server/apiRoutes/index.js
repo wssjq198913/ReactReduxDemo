@@ -3,24 +3,29 @@ import 'babel-polyfill';
 import fetch from 'isomorphic-fetch';
 let router = express.Router();
 
-/* GET home page. */
-router.get('/', function (req, res, next) {
-    res.render('index', { title: 'Express', csrfToken: req.csrfToken() });
-});
-
 router.post('/login', async function (req, res, next) {
-    const fetchUrl = 'http://localhost:9898/api/values';
+    const fetchUrl = 'http://localhost:9898/api/values/Login';
+    const data = {
+        userName: 'johnny',
+        password: 'johnny'
+    }
     const fetchOptions = {
-        method: 'GET',
+        method: 'POST',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
-        }
+        },
+        body: JSON.stringify(data)
     };
     try {
         var result = await fetch(fetchUrl, fetchOptions);
         var json = await result.json();
-        res.json(json);
+        if (result.status >= 200 && result.status < 300) {
+            res.json(json);
+        }
+        else{
+            throw json;
+        }
     }
     catch (error) {
        error.status = 500;
@@ -30,7 +35,7 @@ router.post('/login', async function (req, res, next) {
 });
 
 router.post('/loadQuestionnaire', async function (req, res, next) {
-    const fetchUrl = 'http://localhost:9898/api/values/5';
+    const fetchUrl = 'http://localhost:9898/api/values/GetQuestionnaire/5';
     const fetchOptions = {
         method: 'GET',
         headers: {

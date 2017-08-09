@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux'
 
-import startReducer from './start';
-import questionnaireReducer from './questionnaire';
+import startState from './start';
+import questionnaireState from './questionnaire';
 
 export default combineReducers({
 //   routing: routerReducer,
-    startReducer,
-    questionnaireReducer
+    startState,
+    questionnaireState
 })

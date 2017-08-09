@@ -1,7 +1,8 @@
 import * as questionnaireAction from '../actions/questionnaire';
 
 const initialState = {
-    isFetching: false
+    isFetching: false,
+    contactInfo: null
 };
 
 export default function questionnaireReducer(state = initialState, action = {}) {
