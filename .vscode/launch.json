@@ -7,6 +7,12 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "debug prod server",
+            "program": "${workspaceRoot}/dist/server.js"
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "debug server",
             "program": "${workspaceRoot}\\@server\\bin\\server.js",
             "sourceMaps": true, //sourcemap打开

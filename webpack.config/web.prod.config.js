@@ -1,13 +1,17 @@
 var path = require('path');
 var webpack = require('webpack');
+var openBrowserPlugin = require('open-browser-webpack-plugin');
 var htmlWebpackPlugin = require('html-webpack-plugin');
 var htmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin');
 var extractTextPlugin = require('extract-text-webpack-plugin');
+var os = require('os');
+var browser = os.platform().indexOf('win32') >= 0 ? 'chrome' : 'google chrome';
 
 var myPlugins = [
+    // new openBrowserPlugin({ url: 'http://localhost:8081', browser: browser }),
     new htmlWebpackPlugin({
         template: '!!raw-loader!index.ejs',
-        inject: 'head',
+        inject: 'body',
         filename: 'index.ejs',
         alwaysWriteToDisk: true
     }),
@@ -15,25 +19,28 @@ var myPlugins = [
     new extractTextPlugin({
         filename: 'assets/css/[name].[hash].css',
     }),
-    new webpack.DefinePlugin({
-        'process.env': {
-            NODE_ENV: JSON.stringify('production')
-        }
-    }),
-    new webpack.optimize.UglifyJsPlugin(),
+
     // pack all common packages from app & vendor and name it as verdor.[chunkhash].js.
     // Since we defined packages in vendor, so common packages are exactly the same as verndor.
     // then the packages in app will be moved out.
 
     // manifest is used to split runtime codes of webpack from vendor.js into manifest.js to make sure hash of vendor.js is not changed.
-    new webpack.optimize.CommonsChunkPlugin({ names: ['vendor', 'manifest'] })
+    new webpack.optimize.CommonsChunkPlugin({ names: ['vendor', 'manifest'] }),
+    new webpack.DefinePlugin({
+        'process.env': {
+            NODE_ENV: JSON.stringify('production')
+        }
+    }),
+    new webpack.optimize.UglifyJsPlugin()
 ];
+
 
 
 module.exports = {
     entry: {
-        // app: '',
-        vendor: ['babel-polyfill']
+        app: './@app/index.js',
+        // vendor: ['webpack-hot-middleware/client?reload=true', 'jquery', 'react', 'react-dom',  'react-router', 'babel-polyfill']
+        vendor: ['babel-polyfill', 'react', 'react-dom', 'react-router', 'react-router-dom', 'redux', 'react-redux', 'jquery', 'redux-saga']
     },
 
     output: {
@@ -43,9 +50,10 @@ module.exports = {
         path: path.resolve('./dist'),
         filename: 'assets/js/[name].[chunkhash:8].js',
         chunkFilename: 'assets/js/[id].[chunkhash:8].js',
+        publicPath: '/'
 
         // deploy static files into server(IIS, CDN), then we need to set publicPath.
-        // in this demo, they'er deployed to IIS.
+        // in below sample, they'er deployed to IIS.
         // publicPath: 'http://localhost/'
     },
 
@@ -53,36 +61,47 @@ module.exports = {
 
     module: {
         rules: [{
-                enforce: 'pre',
-                test: /\.js$/,
-                exclude: /node_modules/,
-                loader: 'eslint-loader'
-            },
-            { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader?presets[]=es2015&presets[]=stage-3,plugins[]=dynamic-import-webpack' },
-            { test: /\.(png|woff|woff2|eot|ttf|svg|jpg|gif)$/, loader: ['url-loader', 'img-loader'] },
-            { test: /\.html$/, loader: 'html-loader' },
-            {
-                test: /\.scss$/,
-                use: extractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    use: [{
-                            loader: 'css-loader'
-                        },
-                        {
-                            loader: 'sass-loader'
-                        }
-                    ]
-                })
-            },
-            {
-                test: /\.css$/,
-                use: extractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    use: [{
-                        loader: 'css-loader'
-                    }]
-                })
-            }
+            enforce: 'pre',
+            test: /\.js$/,
+            exclude: /node_modules/,
+            loader: 'eslint-loader'
+        },
+        { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader' },
+        { test: /\.(png|woff|woff2|eot|ttf|svg|jpg|gif)$/, loader: ['url-loader', 'img-loader'] },
+        { test: /\.html$/, loader: 'html-loader' },
+        {
+            test: /\.scss$/,
+            use: extractTextPlugin.extract({
+                fallback: 'style-loader',
+                use: [{
+                    loader: 'css-loader',
+                    options: {
+                        sourceMap: false,
+                        modules: true
+                    }
+                },
+                {
+                    loader: 'sass-loader',
+                    options: {
+                        sourceMap: false,
+                        modules:true
+                    }
+                }
+                ]
+            })
+        },
+        {
+            test: /\.css$/,
+            use: extractTextPlugin.extract({
+                fallback: 'style-loader',
+                use: [{
+                    loader: 'css-loader',
+                    options: {
+                        sourceMap: true,
+                    }
+                }]
+            })
+        }
         ]
     },
 

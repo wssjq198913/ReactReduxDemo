@@ -3,13 +3,13 @@ import path from 'path';
 // import favicon from 'serve-favicon';
 import logger from 'morgan';
 import cookieParser from 'cookie-parser';
-import session from 'express-session';
+import cookieSession from 'cookie-session';
 import bodyParser from 'body-parser';
 import ejs from 'ejs';
 import api from './apiRoutes/index';
 import csrf from 'csurf';
 
-if (process.env.NODE_ENV != 'PROD') {
+if (process.env.NODE_ENV != 'production') {
     var webpack = require('webpack');
     var config = require('../webpack.config/web.dev.config');
     var webpackDevMiddleware = require('webpack-dev-middleware');
@@ -20,7 +20,7 @@ if (process.env.NODE_ENV != 'PROD') {
 let app = express();
 
 // view engine setup
-let viewPath = process.env.NODE_ENV == 'PROD' ? path.join(__dirname) : path.join(__dirname, '../dist');
+let viewPath = process.env.NODE_ENV == 'production' ? path.join(__dirname) : path.join(__dirname, '../dist');
 app.set('views', viewPath);
 app.set('view engine', 'ejs');
 app.engine('.ejs', ejs.__express);
@@ -29,10 +29,10 @@ app.engine('.ejs', ejs.__express);
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser('node angularjs'));
-app.use(session({
-    secret: 'node angularjs',
-    cookie: {}
+app.use(cookieParser('node react'));
+app.use(cookieSession({
+    name: 'session',
+    keys: ['node react'],
 }));
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
@@ -55,7 +55,7 @@ let csrfProtection = csrf({ cookie: {
 
 app.use('/api', csrfProtection, api);
 
-app.use('/', csrfProtection, function(req, res){
+app.get('/', csrfProtection, function(req, res){
     res.render('index', { title: 'Express', csrfToken: req.csrfToken() });
 });
 
