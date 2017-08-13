@@ -48,14 +48,16 @@ if (process.env.NODE_ENV != 'production') {
     app.use(webpackHotMiddleware(compiler));
 }
 
-let csrfProtection = csrf({ cookie: {
-    httpOnly: true
-} });
+let csrfProtection = csrf({
+    cookie: {
+        httpOnly: true
+    }
+});
 
 
 app.use('/api', csrfProtection, api);
 
-app.get('/', csrfProtection, function(req, res){
+app.get('*', csrfProtection, function(req, res) {
     res.render('index', { title: 'Express', csrfToken: req.csrfToken() });
 });
 

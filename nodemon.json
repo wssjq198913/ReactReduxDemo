@@ -1,4 +1,4 @@
 {
-  "verbose": true,
-  "ignore": ["@app/"]
+    "verbose": true,
+    "ignore": ["@app/", "package.json", "nodemon.json", "@specs/"]
 }
