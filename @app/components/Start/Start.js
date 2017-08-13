@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import 'redux';
-import { connect } from 'react-redux';
-import * as startAction from '../../actions/start';
+import style from './Start.scss';
 
 class Start extends Component {
     constructor() {
@@ -33,7 +31,7 @@ class Start extends Component {
                 <br />
                 <div className='row'>
                     <div>{this.props.number}</div>
-                    <button className='btn btn-primary' onClick={() =>this.props.proceed(this.props.history)}>Login</button>
+                    <button className={'btn btn-primary ' + style.myBtn} onClick={() =>this.props.proceed(this.props.history)}>Login</button>
                     <br/>
                     <button className='btn btn-primary' onClick={this.props.increase}>Increase</button>
                 </div>
@@ -43,29 +41,9 @@ class Start extends Component {
 }
 
 Start.propTypes = {
-    policyNumber: React.PropTypes.string,
-    pin: React.PropTypes.string,
-    number: React.PropTypes.number
+    number: React.PropTypes.number,
+    proceed: React.PropTypes.func,
+    increase: React.PropTypes.func
 }
 
-const mapStateToProps = (state) => {
-    return {
-        payLoad: state.startState.payLoad,
-        isShowPolicyNumber: state.startState.isShowPolicyNumber,
-        policyNumber: state.startState.policyNumber,
-        number: state.startState.number
-    }
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        proceed: (history) => {
-            dispatch(startAction.proceed(history));
-        },
-        increase: () => {
-            dispatch(startAction.increase())
-        }
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Start)
+export default Start

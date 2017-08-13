@@ -1,0 +1,19 @@
+:local(.myBtn) {
+    transition: transform .25s ease-in-out;
+    -moz-transition: -moz-transform .25s ease-in-out;
+    /* Firefox 4 */
+    -webkit-transition: -webkit-transform .25s ease-in-out;
+    /* Safari and Chrome */
+    -o-transition: -o-transform .25s ease-in-out;
+    /* Opera */
+    &:hover {
+        transform: rotate(-10deg) scale(1.5, 1.5);
+        transform: rotate(-10deg) scale(1.5, 1.5);
+        -moz-transform: rotate(-10deg) scale(1.5, 1.5);
+        /* Firefox 4 */
+        -webkit-transform: rotate(-10deg) scale(1.5, 1.5);
+        /* Safari and Chrome */
+        -o-transform: rotate(-10deg) scale(1.5, 1.5);
+        /* Opera */
+    }
+}

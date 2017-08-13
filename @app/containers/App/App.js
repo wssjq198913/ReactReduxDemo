@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Switch} from 'react-router-dom';
-import Start from '../Start/Start';
+import StartContainer from '../Start/StartContainer';
 import Questionnaire from '../Questionnaire/Questionnaire';
 import Mask from '../../components/Mask/Mask';
 import 'redux';
@@ -18,7 +18,7 @@ export default class App extends Component {
                 <Mask />
                 <div>This is Header</div>
                 <Switch>
-                    <Route exact path="/" component={Start}  />
+                    <Route exact path="/" component={StartContainer}  />
                     <Route path="/questionnaire" component={Questionnaire} />
                 </Switch>
                 <div>This is Footer</div>
