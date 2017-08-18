@@ -11,7 +11,7 @@ class StartContainer extends Component {
 
     render() {
         return (
-            <Start number={this.props.number} proceed={this.props.proceed} increase={this.props.increase}/>
+            <Start number={this.props.number} proceed={() => this.props.proceed(this.props.history)} increase={this.props.increase}/>
         );
     }
 }

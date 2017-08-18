@@ -31,7 +31,7 @@ class Start extends Component {
                 <br />
                 <div className='row'>
                     <div>{this.props.number}</div>
-                    <button className={'btn btn-primary ' + style.myBtn} onClick={() =>this.props.proceed(this.props.history)}>Login</button>
+                    <button className={'btn btn-primary ' + style.myBtn} onClick={this.props.proceed}>Login</button>
                     <br/>
                     <button className='btn btn-primary' onClick={this.props.increase}>Increase</button>
                 </div>
